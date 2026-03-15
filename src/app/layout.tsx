@@ -48,7 +48,8 @@ export default function RootLayout({
                 </Link>
                 <Link
                   href="/logs/new"
-                  className="rounded-lg bg-[#0f3f2c] px-3 py-1.5 font-semibold text-[#fffdf8] shadow-sm hover:bg-[#17563b]"
+                  className="rounded-lg bg-[#0f3f2c] px-3 py-1.5 font-semibold !text-white shadow-sm hover:bg-[#17563b] visited:!text-white"
+                  style={{ WebkitTextFillColor: "#ffffff", color: "#ffffff" }}
                 >
                   新規記録
                 </Link>
