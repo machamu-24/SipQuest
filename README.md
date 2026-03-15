@@ -15,6 +15,7 @@ SipQuest is a personal drink log app for tracking and revisiting tasting notes f
 1. Install dependencies:
 
 ```bash
+nvm use
 npm install
 ```
 
