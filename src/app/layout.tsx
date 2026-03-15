@@ -38,24 +38,24 @@ export default function RootLayout({
         <PwaRegister />
         <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 pb-10 sm:px-6">
           <header className="sticky top-0 z-20 mt-4 rounded-2xl border border-[#d8cfbf] bg-[#fffcf5]/90 px-4 py-3 backdrop-blur">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <Link href="/" className="text-lg font-bold tracking-tight text-[#123524]">
                 SipQuest
               </Link>
-              <nav className="flex items-center gap-3 text-sm font-medium">
-                <Link href="/" className="rounded-lg px-3 py-1.5 text-[#2e2a21] hover:bg-[#efe5d2]">
+              <nav className="grid grid-cols-3 gap-2 text-center text-xs font-medium sm:flex sm:items-center sm:gap-3 sm:text-sm">
+                <Link href="/" className="rounded-lg px-3 py-2 text-[#2e2a21] hover:bg-[#efe5d2]">
                   記録一覧
                 </Link>
                 <Link
                   href="/logs/new"
-                  className="rounded-lg bg-[#0f3f2c] px-3 py-1.5 font-semibold !text-white shadow-sm hover:bg-[#17563b] visited:!text-white"
+                  className="rounded-lg bg-[#0f3f2c] px-3 py-2 font-semibold !text-white shadow-sm hover:bg-[#17563b] visited:!text-white"
                   style={{ WebkitTextFillColor: "#ffffff", color: "#ffffff" }}
                 >
                   新規記録
                 </Link>
                 <Link
                   href="/settings"
-                  className="rounded-lg px-3 py-1.5 text-[#2e2a21] hover:bg-[#efe5d2]"
+                  className="rounded-lg px-3 py-2 text-[#2e2a21] hover:bg-[#efe5d2]"
                 >
                   設定
                 </Link>
