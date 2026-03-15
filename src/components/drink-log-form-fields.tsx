@@ -21,6 +21,9 @@ export function DrinkLogFormFields({
   submitLabel,
   photoHint,
 }: DrinkLogFormFieldsProps) {
+  const baseFieldClassName =
+    "rounded-xl border border-[#cfc3ae] bg-[#fffefb] px-3 py-2 text-[#1f1a13] outline-none ring-0 placeholder:text-[#8a7f70] focus:border-[#1f5a40] focus:ring-2 focus:ring-[#1f5a40]/20";
+
   return (
     <>
       <label className="grid gap-2 text-sm font-medium text-[#2e2a21]">
@@ -30,7 +33,7 @@ export function DrinkLogFormFields({
           type="date"
           name="drankAt"
           defaultValue={defaults.drankAt}
-          className="rounded-xl border border-[#d8cfbf] bg-white px-3 py-2 outline-none ring-0 focus:border-[#2d6a4f]"
+          className={baseFieldClassName}
         />
       </label>
 
@@ -40,7 +43,7 @@ export function DrinkLogFormFields({
           required
           name="drinkType"
           defaultValue={defaults.drinkType}
-          className="rounded-xl border border-[#d8cfbf] bg-white px-3 py-2 outline-none ring-0 focus:border-[#2d6a4f]"
+          className={baseFieldClassName}
         >
           {DRINK_TYPE_OPTIONS.map((type) => (
             <option key={type} value={type}>
@@ -58,7 +61,7 @@ export function DrinkLogFormFields({
           name="brandName"
           defaultValue={defaults.brandName}
           placeholder="例: 十四代 本丸"
-          className="rounded-xl border border-[#d8cfbf] bg-white px-3 py-2 outline-none ring-0 focus:border-[#2d6a4f]"
+          className={baseFieldClassName}
         />
       </label>
 
@@ -69,7 +72,7 @@ export function DrinkLogFormFields({
           name="origin"
           defaultValue={defaults.origin}
           placeholder="例: 山形県"
-          className="rounded-xl border border-[#d8cfbf] bg-white px-3 py-2 outline-none ring-0 focus:border-[#2d6a4f]"
+          className={baseFieldClassName}
         />
       </label>
 
@@ -80,7 +83,7 @@ export function DrinkLogFormFields({
           name="tasteNote"
           defaultValue={defaults.tasteNote}
           placeholder="香り、甘み、余韻、食事との相性など"
-          className="rounded-xl border border-[#d8cfbf] bg-white px-3 py-2 outline-none ring-0 focus:border-[#2d6a4f]"
+          className={baseFieldClassName}
         />
       </label>
 
@@ -90,7 +93,7 @@ export function DrinkLogFormFields({
           type="file"
           name="photo"
           accept="image/*"
-          className="rounded-xl border border-[#d8cfbf] bg-white px-3 py-2 text-sm outline-none file:mr-2 file:rounded-lg file:border-0 file:bg-[#2d6a4f] file:px-3 file:py-1.5 file:text-white"
+          className={`${baseFieldClassName} text-sm file:mr-2 file:rounded-lg file:border-0 file:bg-[#1f5a40] file:px-3 file:py-1.5 file:font-semibold file:text-white file:hover:bg-[#184734]`}
         />
         <span className="text-xs font-normal text-[#6e685b]">{photoHint}</span>
       </label>

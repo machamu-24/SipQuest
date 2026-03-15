@@ -3,6 +3,7 @@
 :root {
   --ink: #2e2a21;
   --paper: #fffdf8;
+  color-scheme: light;
 }
 
 * {

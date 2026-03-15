@@ -14,7 +14,7 @@ export default function NewLogPage() {
 
       <form
         action={createDrinkLog}
-        className="grid gap-4 rounded-2xl border border-[#d8cfbf] bg-[#fffcf5] p-4 sm:p-5"
+        className="grid gap-4 rounded-2xl border border-[#d8cfbf] bg-[#fffdf9] p-4 shadow-sm sm:p-5"
         encType="multipart/form-data"
       >
         <DrinkLogFormFields
