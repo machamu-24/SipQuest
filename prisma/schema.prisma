@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum DrinkType {
+  SAKE
+  HIGHBALL
+  BEER
+  WINE
+  OTHER
+}
+
+model DrinkLog {
+  id        String      @id @default(cuid())
+  drankAt   DateTime
+  drinkType DrinkType
+  brandName String
+  origin    String?
+  tasteNote String?
+  photos    DrinkPhoto[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([drankAt])
+  @@index([drinkType])
+  @@index([brandName])
+}
+
+model DrinkPhoto {
+  id          String   @id @default(cuid())
+  drinkLogId  String
+  drinkLog    DrinkLog @relation(fields: [drinkLogId], references: [id], onDelete: Cascade)
+  storagePath String
+  mimeType    String?
+  fileSize    Int?
+  createdAt   DateTime @default(now())
+
+  @@index([drinkLogId])
+}

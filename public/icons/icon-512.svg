@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="SipQuest icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#123524" />
+      <stop offset="100%" stop-color="#2d6a4f" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)" />
+  <g fill="#f9f6f0">
+    <path d="M155 124h31l31 69 31-69h31l-46 104v132h-32V228z" />
+    <path d="M339 123c-38.7 0-70 31.3-70 70v125c0 38.7 31.3 70 70 70s70-31.3 70-70V193c0-38.7-31.3-70-70-70zm39 195c0 21.5-17.5 39-39 39s-39-17.5-39-39V193c0-21.5 17.5-39 39-39s39 17.5 39 39z" />
+  </g>
+</svg>
