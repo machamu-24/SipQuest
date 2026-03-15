@@ -1,6 +1,5 @@
-const CACHE_NAME = "sipquest-cache-v1";
+const CACHE_NAME = "sipquest-cache-v2";
 const CORE_ASSETS = [
-  "/",
   "/manifest.webmanifest",
   "/icons/icon-192.svg",
   "/icons/icon-512.svg",
@@ -25,6 +24,21 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  const requestUrl = new URL(event.request.url);
+  if (requestUrl.origin !== self.location.origin) {
+    return;
+  }
+
+  // Always prefer fresh HTML so UI updates are not blocked by stale caches.
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request).catch(() => {
+        return caches.match(event.request);
+      }),
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) {
@@ -33,7 +47,7 @@ self.addEventListener("fetch", (event) => {
 
       return fetch(event.request)
         .then((response) => {
-          if (!response.ok || new URL(event.request.url).origin !== self.location.origin) {
+          if (!response.ok) {
             return response;
           }
 

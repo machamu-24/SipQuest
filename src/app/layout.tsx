@@ -48,7 +48,7 @@ export default function RootLayout({
                 </Link>
                 <Link
                   href="/logs/new"
-                  className="rounded-lg bg-[#123524] px-3 py-1.5 text-white hover:bg-[#1a4731]"
+                  className="rounded-lg bg-[#0f3f2c] px-3 py-1.5 font-semibold text-[#fffdf8] shadow-sm hover:bg-[#17563b]"
                 >
                   新規記録
                 </Link>
