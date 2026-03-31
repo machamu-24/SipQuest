@@ -19,20 +19,17 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     title: "SipQuest",
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0d1117",
+  themeColor: "#f7f3ed",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SVGアイコン（インライン）
-// ─────────────────────────────────────────────────────────────────────────────
 function IconHome({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -82,13 +79,13 @@ export default function RootLayout({
         <PwaRegister />
 
         {/* ─── PC用ヘッダーナビゲーション（md以上で表示） ─── */}
-        <header className="hidden md:block sticky top-0 z-30 border-b border-white/8 bg-[#0d1117]/90 backdrop-blur-xl">
+        <header className="hidden md:block sticky top-0 z-30 border-b border-[#1a1612]/8 bg-[#f7f3ed]/90 backdrop-blur-xl">
           <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
             {/* ロゴ */}
             <Link href="/" className="flex items-center gap-2 group">
-              <IconGlobe className="h-5 w-5 text-[#d4a843] transition-transform group-hover:rotate-12" />
-              <span className="text-base font-bold tracking-tight text-white">
-                Sip<span className="text-[#d4a843]">Quest</span>
+              <IconGlobe className="h-5 w-5 text-[#b5832a] transition-transform group-hover:rotate-12" />
+              <span className="text-base font-bold tracking-tight text-[#1a1612]">
+                Sip<span className="text-[#b5832a]">Quest</span>
               </span>
             </Link>
 
@@ -96,21 +93,21 @@ export default function RootLayout({
             <nav className="flex items-center gap-1">
               <Link
                 href="/"
-                className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-[#8b95a8] transition hover:bg-white/6 hover:text-white"
+                className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-[#5c5346] transition hover:bg-[#1a1612]/6 hover:text-[#1a1612]"
               >
                 <IconHome className="h-4 w-4" />
                 記録一覧
               </Link>
               <Link
                 href="/logs/new"
-                className="flex items-center gap-1.5 rounded-lg bg-[#d4a843] px-4 py-2 text-sm font-semibold text-[#0d1117] transition hover:bg-[#f0c96a]"
+                className="flex items-center gap-1.5 rounded-lg bg-[#b5832a] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#8a6020]"
               >
                 <IconPlus className="h-4 w-4" />
                 新規記録
               </Link>
               <Link
                 href="/settings"
-                className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-[#8b95a8] transition hover:bg-white/6 hover:text-white"
+                className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-[#5c5346] transition hover:bg-[#1a1612]/6 hover:text-[#1a1612]"
               >
                 <IconSettings className="h-4 w-4" />
                 設定
@@ -120,12 +117,12 @@ export default function RootLayout({
         </header>
 
         {/* ─── スマホ用トップバー（md未満で表示） ─── */}
-        <header className="md:hidden sticky top-0 z-30 border-b border-white/8 bg-[#0d1117]/90 backdrop-blur-xl">
+        <header className="md:hidden sticky top-0 z-30 border-b border-[#1a1612]/8 bg-[#f7f3ed]/90 backdrop-blur-xl">
           <div className="flex h-12 items-center justify-center px-4">
             <Link href="/" className="flex items-center gap-1.5">
-              <IconGlobe className="h-4 w-4 text-[#d4a843]" />
-              <span className="text-sm font-bold tracking-tight text-white">
-                Sip<span className="text-[#d4a843]">Quest</span>
+              <IconGlobe className="h-4 w-4 text-[#b5832a]" />
+              <span className="text-sm font-bold tracking-tight text-[#1a1612]">
+                Sip<span className="text-[#b5832a]">Quest</span>
               </span>
             </Link>
           </div>
@@ -137,11 +134,11 @@ export default function RootLayout({
         </div>
 
         {/* ─── スマホ用ボトムナビゲーション（md未満で表示） ─── */}
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 border-t border-white/8 bg-[#0d1117]/95 backdrop-blur-xl bottom-nav-safe">
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 border-t border-[#1a1612]/8 bg-[#f7f3ed]/95 backdrop-blur-xl bottom-nav-safe">
           <div className="grid grid-cols-3">
             <Link
               href="/"
-              className="flex flex-col items-center gap-1 px-2 py-3 text-[#8b95a8] transition hover:text-[#d4a843] active:scale-95"
+              className="flex flex-col items-center gap-1 px-2 py-3 text-[#9c8f82] transition hover:text-[#b5832a] active:scale-95"
             >
               <IconHome className="h-5 w-5" />
               <span className="text-[10px] font-medium">記録一覧</span>
@@ -150,14 +147,14 @@ export default function RootLayout({
               href="/logs/new"
               className="flex flex-col items-center gap-1 px-2 py-3 transition active:scale-95"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#d4a843] shadow-lg shadow-[#d4a843]/30 transition hover:bg-[#f0c96a]">
-                <IconPlus className="h-5 w-5 text-[#0d1117]" />
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#b5832a] shadow-md shadow-[#b5832a]/30 transition hover:bg-[#8a6020]">
+                <IconPlus className="h-5 w-5 text-white" />
               </span>
-              <span className="text-[10px] font-medium text-[#d4a843]">新規記録</span>
+              <span className="text-[10px] font-medium text-[#b5832a]">新規記録</span>
             </Link>
             <Link
               href="/settings"
-              className="flex flex-col items-center gap-1 px-2 py-3 text-[#8b95a8] transition hover:text-[#d4a843] active:scale-95"
+              className="flex flex-col items-center gap-1 px-2 py-3 text-[#9c8f82] transition hover:text-[#b5832a] active:scale-95"
             >
               <IconSettings className="h-5 w-5" />
               <span className="text-[10px] font-medium">設定</span>
