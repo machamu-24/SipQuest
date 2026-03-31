@@ -27,15 +27,18 @@ export default async function EditLogPage({ params }: EditPageProps) {
   }
 
   return (
-    <section className="mx-auto grid w-full max-w-2xl gap-4">
-      <header className="grid gap-1">
-        <h1 className="text-2xl font-bold tracking-tight text-[#123524]">記録編集</h1>
-        <p className="text-sm text-[#6e685b]">内容を更新できます。写真は追加アップロード形式です。</p>
+    <section className="reveal mx-auto w-full max-w-2xl">
+      {/* ─── ページヘッダー ─── */}
+      <header className="mb-5">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#d4a843]">Edit Entry</p>
+        <h1 className="mt-1 text-2xl font-bold tracking-tight text-white">記録編集</h1>
+        <p className="mt-1 text-sm text-[#8b95a8]">内容を更新できます。写真は追加アップロード形式です。</p>
       </header>
 
+      {/* ─── フォーム ─── */}
       <form
         action={updateDrinkLog}
-        className="grid gap-4 rounded-2xl border border-[#d8cfbf] bg-[#fffcf5] p-4 sm:p-5"
+        className="glass-card p-4 sm:p-6"
         encType="multipart/form-data"
       >
         <input type="hidden" name="id" value={log.id} />
@@ -52,23 +55,40 @@ export default async function EditLogPage({ params }: EditPageProps) {
         />
       </form>
 
-      {log.photos.length > 0 ? (
-        <div className="grid gap-2 rounded-2xl border border-[#d8cfbf] bg-[#fffcf5] p-4">
-          <h2 className="text-sm font-semibold text-[#2e2a21]">現在の写真</h2>
+      {/* ─── 現在の写真 ─── */}
+      {log.photos.length > 0 && (
+        <div className="mt-4 glass-card p-4">
+          <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#8b95a8]">
+            現在の写真 ({log.photos.length}枚)
+          </h2>
           <ul className="grid gap-2 sm:grid-cols-2">
             {log.photos.map((photo) => (
-              <li key={photo.id} className="overflow-hidden rounded-xl border border-[#e6dccb] bg-white">
+              <li key={photo.id} className="overflow-hidden rounded-xl border border-white/8">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={photo.storagePath} alt={`${log.brandName} の写真`} className="h-full w-full object-cover" />
+                <img
+                  src={photo.storagePath}
+                  alt={`${log.brandName} の写真`}
+                  className="h-40 w-full object-cover"
+                />
               </li>
             ))}
           </ul>
         </div>
-      ) : null}
+      )}
 
-      <Link href={`/logs/${log.id}`} className="text-sm font-medium text-[#2d6a4f] hover:underline">
-        ← 詳細へ戻る
-      </Link>
+      {/* ─── 戻るリンク ─── */}
+      <div className="mt-4">
+        <Link
+          href={`/logs/${log.id}`}
+          className="flex items-center gap-1.5 text-sm font-medium text-[#8b95a8] transition hover:text-[#d4a843]"
+        >
+          <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          詳細へ戻る
+        </Link>
+      </div>
     </section>
   );
 }

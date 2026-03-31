@@ -4,10 +4,19 @@ import { notFound } from "next/navigation";
 import { deleteDrinkLog } from "@/app/actions/drink-log-actions";
 import { formatDisplayDate } from "@/lib/date";
 import { DRINK_TYPE_LABELS } from "@/lib/drink-types";
+import type { DrinkTypeValue } from "@/lib/map-taxonomy";
 import { prisma } from "@/lib/prisma";
 
 type DetailPageProps = {
   params: Promise<{ id: string }>;
+};
+
+const DRINK_TYPE_BADGE_CLASS: Record<DrinkTypeValue, string> = {
+  SAKE: "badge-sake",
+  BEER: "badge-beer",
+  WINE: "badge-wine",
+  HIGHBALL: "badge-highball",
+  OTHER: "badge-other",
 };
 
 export default async function LogDetailPage({ params }: DetailPageProps) {
@@ -26,14 +35,60 @@ export default async function LogDetailPage({ params }: DetailPageProps) {
     notFound();
   }
 
+  const badgeClass = DRINK_TYPE_BADGE_CLASS[log.drinkType as DrinkTypeValue];
+  const heroPhoto = log.photos[0];
+
   return (
-    <section className="mx-auto grid w-full max-w-3xl gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h1 className="text-2xl font-bold tracking-tight text-[#123524]">記録詳細</h1>
+    <section className="reveal mx-auto grid w-full max-w-3xl gap-4">
+      {/* ─── ヒーロー写真 ─── */}
+      {heroPhoto && (
+        <div className="relative overflow-hidden rounded-2xl border border-white/8">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={heroPhoto.storagePath}
+            alt={`${log.brandName} の写真`}
+            className="h-56 w-full object-cover sm:h-72"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent" />
+          <div className="absolute bottom-4 left-4 right-4">
+            <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold ${badgeClass}`}>
+              {DRINK_TYPE_LABELS[log.drinkType as DrinkTypeValue]}
+            </span>
+            <h1 className="mt-1 text-xl font-bold text-white drop-shadow-lg sm:text-2xl">
+              {log.brandName}
+            </h1>
+          </div>
+        </div>
+      )}
+
+      {/* ─── ヘッダー（写真なし時） ─── */}
+      {!heroPhoto && (
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold ${badgeClass}`}>
+              {DRINK_TYPE_LABELS[log.drinkType as DrinkTypeValue]}
+            </span>
+            <h1 className="mt-2 text-2xl font-bold tracking-tight text-white">{log.brandName}</h1>
+          </div>
+        </div>
+      )}
+
+      {/* ─── アクションボタン ─── */}
+      <div className="flex items-center justify-between gap-2">
+        <Link
+          href="/"
+          className="flex items-center gap-1.5 text-sm font-medium text-[#8b95a8] transition hover:text-[#d4a843]"
+        >
+          <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          一覧へ戻る
+        </Link>
         <div className="flex items-center gap-2">
           <Link
             href={`/logs/${log.id}/edit`}
-            className="rounded-lg bg-[#2d6a4f] px-3 py-2 text-sm font-semibold text-white hover:bg-[#285d45]"
+            className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
           >
             編集
           </Link>
@@ -41,7 +96,7 @@ export default async function LogDetailPage({ params }: DetailPageProps) {
             <input type="hidden" name="id" value={log.id} />
             <button
               type="submit"
-              className="rounded-lg bg-[#8b2d2d] px-3 py-2 text-sm font-semibold text-white hover:bg-[#742626]"
+              className="rounded-xl border border-[#8b2252]/40 bg-[#8b2252]/15 px-4 py-2 text-sm font-semibold text-[#c4436e] transition hover:bg-[#8b2252]/25"
             >
               削除
             </button>
@@ -49,62 +104,77 @@ export default async function LogDetailPage({ params }: DetailPageProps) {
         </div>
       </div>
 
-      <article className="grid gap-5 rounded-2xl border border-[#d8cfbf] bg-[#fffcf5] p-4 sm:p-5">
-        <dl className="grid gap-3 sm:grid-cols-2">
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-[#6e685b]">飲んだ日</dt>
-            <dd className="mt-1 text-sm text-[#2e2a21]">{formatDisplayDate(log.drankAt)}</dd>
+      {/* ─── 詳細情報カード ─── */}
+      <article className="glass-card p-4 sm:p-5">
+        {/* メタ情報グリッド */}
+        <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="col-span-2 sm:col-span-1">
+            <dt className="text-[10px] font-semibold uppercase tracking-wider text-[#4a5568]">飲んだ日</dt>
+            <dd className="mt-1 text-sm font-medium text-white">{formatDisplayDate(log.drankAt)}</dd>
           </div>
-
           <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-[#6e685b]">種類</dt>
-            <dd className="mt-1 text-sm text-[#2e2a21]">{DRINK_TYPE_LABELS[log.drinkType]}</dd>
+            <dt className="text-[10px] font-semibold uppercase tracking-wider text-[#4a5568]">種類</dt>
+            <dd className="mt-1">
+              <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${badgeClass}`}>
+                {DRINK_TYPE_LABELS[log.drinkType as DrinkTypeValue]}
+              </span>
+            </dd>
           </div>
-
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-[#6e685b]">銘柄名</dt>
-            <dd className="mt-1 text-sm text-[#2e2a21]">{log.brandName}</dd>
-          </div>
-
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-[#6e685b]">産地</dt>
-            <dd className="mt-1 text-sm text-[#2e2a21]">{log.origin || "未記録"}</dd>
+          <div className="col-span-2 sm:col-span-2">
+            <dt className="text-[10px] font-semibold uppercase tracking-wider text-[#4a5568]">産地</dt>
+            <dd className="mt-1 text-sm font-medium text-white">
+              {log.origin ? (
+                <span className="flex items-center gap-1">
+                  <svg className="h-3.5 w-3.5 text-[#52b788]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  {log.origin}
+                </span>
+              ) : (
+                <span className="text-[#4a5568]">未記録</span>
+              )}
+            </dd>
           </div>
         </dl>
 
-        <div className="grid gap-2">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-[#6e685b]">味メモ</h2>
-          <p className="whitespace-pre-wrap rounded-xl border border-[#e6dccb] bg-white p-3 text-sm leading-6 text-[#2e2a21]">
-            {log.tasteNote || "メモはまだありません。"}
+        {/* 区切り線 */}
+        <div className="my-4 border-t border-white/6" />
+
+        {/* 味メモ */}
+        <div>
+          <h2 className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#4a5568]">味メモ</h2>
+          <p className="whitespace-pre-wrap rounded-xl border border-white/6 bg-white/3 p-3.5 text-sm leading-7 text-[#e8edf5]">
+            {log.tasteNote || (
+              <span className="text-[#4a5568]">メモはまだありません。</span>
+            )}
           </p>
         </div>
 
-        <div className="grid gap-2">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-[#6e685b]">写真</h2>
-          {log.photos.length === 0 ? (
-            <p className="rounded-xl border border-dashed border-[#c9bda8] bg-white p-4 text-sm text-[#6e685b]">
-              写真はまだ登録されていません。
-            </p>
-          ) : (
-            <ul className="grid gap-3 sm:grid-cols-2">
-              {log.photos.map((photo) => (
-                <li key={photo.id} className="overflow-hidden rounded-xl border border-[#e6dccb] bg-white">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={photo.storagePath}
-                    alt={`${log.brandName} の写真`}
-                    className="h-full w-full object-cover"
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {/* 写真ギャラリー（複数枚） */}
+        {log.photos.length > 0 && (
+          <>
+            <div className="my-4 border-t border-white/6" />
+            <div>
+              <h2 className="mb-3 text-[10px] font-semibold uppercase tracking-wider text-[#4a5568]">
+                写真 ({log.photos.length}枚)
+              </h2>
+              <ul className="grid gap-3 sm:grid-cols-2">
+                {log.photos.map((photo) => (
+                  <li key={photo.id} className="overflow-hidden rounded-xl border border-white/8">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={photo.storagePath}
+                      alt={`${log.brandName} の写真`}
+                      className="h-48 w-full object-cover"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
       </article>
-
-      <Link href="/" className="text-sm font-medium text-[#2d6a4f] hover:underline">
-        ← 一覧へ戻る
-      </Link>
     </section>
   );
 }

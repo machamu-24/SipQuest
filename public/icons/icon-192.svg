@@ -1,13 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" role="img" aria-label="SipQuest icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#123524" />
-      <stop offset="100%" stop-color="#2d6a4f" />
+      <stop offset="0%" stop-color="#1c2333"/>
+      <stop offset="100%" stop-color="#0d1117"/>
     </linearGradient>
   </defs>
-  <rect width="192" height="192" rx="34" fill="url(#bg)" />
-  <g fill="#f9f6f0">
-    <path d="M58 47h10l10 26 10-26h10l-16 38v44h-8V85z" />
-    <path d="M126 46c-13.8 0-25 11.2-25 25v35c0 13.8 11.2 25 25 25s25-11.2 25-25V71c0-13.8-11.2-25-25-25zm15 60c0 8.3-6.7 15-15 15s-15-6.7-15-15V71c0-8.3 6.7-15 15-15s15 6.7 15 15z" />
-  </g>
+  <!-- 背景 -->
+  <rect width="192" height="192" rx="40" fill="url(#bg)"/>
+  <!-- グローブアイコン（地図のモチーフ） -->
+  <circle cx="96" cy="88" r="44" fill="none" stroke="#d4a843" stroke-width="5"/>
+  <line x1="52" y1="88" x2="140" y2="88" stroke="#d4a843" stroke-width="4"/>
+  <path d="M96 44 Q112 66 112 88 Q112 110 96 132 Q80 110 80 88 Q80 66 96 44Z" fill="none" stroke="#d4a843" stroke-width="4"/>
+  <!-- SQ テキスト -->
+  <text x="96" y="162" font-family="'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="800" fill="#d4a843" text-anchor="middle" letter-spacing="4">SQ</text>
 </svg>

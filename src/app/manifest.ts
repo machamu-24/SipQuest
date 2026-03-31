@@ -4,11 +4,11 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "SipQuest",
     short_name: "SipQuest",
-    description: "飲んだお酒の味と写真を記録して楽しむ個人向けノート",
+    description: "地図から辿る、お酒の記憶。日本酒・ワイン・ビール・ハイボールの記録ノート。",
     start_url: "/",
     display: "standalone",
-    background_color: "#f8f3e8",
-    theme_color: "#123524",
+    background_color: "#0d1117",
+    theme_color: "#0d1117",
     icons: [
       {
         src: "/icons/icon-192.svg",

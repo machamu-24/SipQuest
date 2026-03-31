@@ -1,4 +1,4 @@
-const CACHE_NAME = "sipquest-cache-v2";
+const CACHE_NAME = "sipquest-cache-v3";
 const CORE_ASSETS = [
   "/manifest.webmanifest",
   "/icons/icon-192.svg",
@@ -6,7 +6,9 @@ const CORE_ASSETS = [
 ];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS)));
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS)),
+  );
   self.skipWaiting();
 });
 
@@ -14,7 +16,13 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))))
+      .then((keys) =>
+        Promise.all(
+          keys
+            .filter((key) => key !== CACHE_NAME)
+            .map((key) => caches.delete(key)),
+        ),
+      )
       .then(() => self.clients.claim()),
   );
 });
@@ -29,16 +37,17 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Always prefer fresh HTML so UI updates are not blocked by stale caches.
+  // ナビゲーションリクエストはネットワーク優先（UIの更新をブロックしない）
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request).catch(() => {
-        return caches.match(event.request);
+        return caches.match(event.request) ?? caches.match("/");
       }),
     );
     return;
   }
 
+  // 静的アセットはキャッシュ優先
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) {

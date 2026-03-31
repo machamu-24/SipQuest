@@ -1,28 +1,75 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   SipQuest Design Tokens
+   コンセプト: 深夜の酒場・地図の羊皮紙・お酒の琥珀色
+   ─────────────────────────────────────────────────────────────────────────── */
 :root {
-  --ink: #2e2a21;
-  --paper: #fffdf8;
-  color-scheme: light;
+  /* ベースカラー: 深みのある藍墨色 */
+  --bg-base: #0d1117;
+  --bg-surface: #161b22;
+  --bg-elevated: #1c2333;
+  --bg-card: #1e2a3a;
+
+  /* テキスト */
+  --text-primary: #e8edf5;
+  --text-secondary: #8b95a8;
+  --text-muted: #4a5568;
+
+  /* アクセント: 琥珀・金色（お酒の色） */
+  --accent-amber: #d4a843;
+  --accent-amber-light: #f0c96a;
+  --accent-amber-dark: #a07830;
+
+  /* セカンダリアクセント: 深紅（ワイン色） */
+  --accent-wine: #8b2252;
+  --accent-wine-light: #c4436e;
+
+  /* 地図グリーン */
+  --map-green: #2d6a4f;
+  --map-green-light: #52b788;
+  --map-green-dark: #1b4332;
+
+  /* 酒類カラー */
+  --sake-color: #7eb8d4;      /* 日本酒: 澄んだ水色 */
+  --beer-color: #e8a020;      /* ビール: 麦の黄金色 */
+  --wine-color: #9b3060;      /* ワイン: 深紅 */
+  --highball-color: #4a9eca;  /* ハイボール: 氷の青 */
+  --other-color: #6b7280;     /* その他: グレー */
+
+  /* ボーダー */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
+
+  color-scheme: dark;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
-  color: var(--ink);
-  background:
-    radial-gradient(circle at 20% 10%, #f2ead8 0%, transparent 35%),
-    radial-gradient(circle at 85% 0%, #dce9de 0%, transparent 30%),
-    linear-gradient(180deg, #f8f3e8 0%, #f3ecdc 100%);
+  color: var(--text-primary);
+  background-color: var(--bg-base);
+  background-image:
+    radial-gradient(ellipse at 10% 0%, rgba(212, 168, 67, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 100%, rgba(45, 106, 79, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(139, 34, 82, 0.04) 0%, transparent 70%);
   font-family:
     "Hiragino Sans",
     "Hiragino Kaku Gothic ProN",
     "Noto Sans JP",
+    "Yu Gothic",
     sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a,
@@ -31,10 +78,28 @@ a:visited {
   text-decoration: none;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   スクロールバー（Webkit）
+   ─────────────────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   アニメーション
+   ─────────────────────────────────────────────────────────────────────────── */
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -42,14 +107,60 @@ a:visited {
   }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
 .reveal {
-  animation: rise-in 420ms ease-out both;
+  animation: rise-in 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-
 .reveal-delay-1 {
-  animation-delay: 80ms;
+  animation-delay: 60ms;
+}
+.reveal-delay-2 {
+  animation-delay: 120ms;
+}
+.reveal-delay-3 {
+  animation-delay: 180ms;
 }
 
-.reveal-delay-2 {
-  animation-delay: 140ms;
+/* ─────────────────────────────────────────────────────────────────────────────
+   グラスモーフィズム カード
+   ─────────────────────────────────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(30, 42, 58, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-default);
+  border-radius: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   フォーム要素のリセット
+   ─────────────────────────────────────────────────────────────────────────── */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   酒類バッジカラー
+   ─────────────────────────────────────────────────────────────────────────── */
+.badge-sake     { background: rgba(126, 184, 212, 0.15); color: #7eb8d4; border-color: rgba(126, 184, 212, 0.3); }
+.badge-beer     { background: rgba(232, 160, 32, 0.15);  color: #e8a020; border-color: rgba(232, 160, 32, 0.3); }
+.badge-wine     { background: rgba(155, 48, 96, 0.2);    color: #c4436e; border-color: rgba(155, 48, 96, 0.35); }
+.badge-highball { background: rgba(74, 158, 202, 0.15);  color: #4a9eca; border-color: rgba(74, 158, 202, 0.3); }
+.badge-other    { background: rgba(107, 114, 128, 0.15); color: #9ca3af; border-color: rgba(107, 114, 128, 0.3); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ボトムナビゲーション用のセーフエリア対応
+   ─────────────────────────────────────────────────────────────────────────── */
+.bottom-nav-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
